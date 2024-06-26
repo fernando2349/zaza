@@ -21,6 +21,47 @@ class ClientesController extends Controller
         return response()->json($data, 200);
     }
 
+    public function login(request $request){
+
+        $validator = validator::make($request->all(),[
+            'email' => 'required',
+            'contraseña' => 'required'
+        ]);
+        
+        if ($validator->fails()){
+            $data = [
+                'message' => 'Error en la validacion de los datos',
+                'error'  => $validator->errors(),
+                'status' => 400
+            ];
+
+            return response()->json($data,400);
+        }
+
+        
+        $user = Clientes::where([
+                ['email', '=', $request->email],
+                ['contraseña', '=', $request->contraseña]
+            ])
+        ->first();
+        
+                
+        if (!$user){
+            $data = [
+                'message' => 'Usuario incorrecto',
+                'status' => '401'
+            ];
+            return response ()->json ($data,401);
+
+        }
+        $data = [
+            'user' => $user,
+            'status' => 200
+        ];
+
+        return response()->json($data,200);
+    }    
+
     public function store(Request $request)
 {
     // Validación de los datos de entrada

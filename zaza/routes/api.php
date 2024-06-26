@@ -12,10 +12,12 @@ Route::get('/clientes/{id}', [ClientesController::class, 'show'] );
 
 Route::post('/clientes', [ClientesController::class, 'store']);
 
+Route::post('/clientes/login', [ClientesController::class, 'login']);
+
 Route::put('/clientes/{id}', [ClientesController::class, 'update']);
 
 Route::delete('/clientes/{id}', [ClientesController::class, 'destroy']);
-
+ 
 // controladores producto
 Route::get('/productos', [ProductoController::class, 'index']);
 
